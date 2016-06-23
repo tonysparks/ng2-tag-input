@@ -971,7 +971,7 @@ webpackJsonp([0],{
 /***/ 337:
 /***/ function(module, exports) {
 
-	module.exports = "<main>\n\t<h1>ng2TagInput</h1>\n\n\t<div class=\"home-container\">\n\t\t<div class=\"options\">\n\t\t\t<label>\n\t\t\t\tReadonly:\n\t\t\t\t<input type=\"checkbox\" [(ngModel)]=\"options.readonly\">\n\t\t\t</label>\n\n\t\t\t<label>\n\t\t\t\tPlaceholder:\n\t\t\t\t<input type=\"text\" [(ngModel)]=\"options.placeholder\">\n\t\t\t</label>\n\t\t</div>\n\n\t\t<div class=\"tag-input-container\">\n\t\t\t<tag-input [(ngModel)]=\"items\"\n\t\t\t\t\t   (onSelect)=\"onSelect($event)\"\n\t\t\t\t\t   (onAdd)=\"onAdd($event)\"\n\t\t\t\t\t   (onRemove)=\"onRemove($event)\"\n\t\t\t\t\t   [readonly]=\"options.readonly\"\n\t\t\t\t\t   [validators]=\"validators\"\n\t\t\t\t\t   [transform]=\"transform\"\n\t\t\t\t\t   [placeholder]=\"options.placeholder\">\n\t\t\t</tag-input>\n\t\t</div>\n\t</div>\n</main>\n\n";
+	module.exports = "<main><div class=\"home-container\">\n\t\t<div class=\"tag-input-container\">\n\t\t\t<tag-input [(ngModel)]=\"items\"\n\t\t\t\t\t   (onSelect)=\"onSelect($event)\"\n\t\t\t\t\t   (onAdd)=\"onAdd($event)\"\n\t\t\t\t\t   (onRemove)=\"onRemove($event)\"\n\t\t\t\t\t   [readonly]=\"options.readonly\"\n\t\t\t\t\t   [validators]=\"validators\"\n\t\t\t\t\t   [transform]=\"transform\"\n\t\t\t\t\t   [placeholder]=\"options.placeholder\">\n\t\t\t</tag-input>\n\t\t</div>\n\t</div>\n</main>\n\n";
 
 /***/ }
 

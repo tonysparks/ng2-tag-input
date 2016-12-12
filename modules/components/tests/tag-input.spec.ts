@@ -20,6 +20,8 @@ import {
     TagInputComponentWithTemplate,
     TagInputComponentWithAutocomplete,
     TagInputComponentWithOnlyAutocomplete,
+    TagInputComponentWithCustomAutocomplete,
+    TagInputComponentWithoutCustomAutocomplete,
     TestModule
 } from './testing-helpers';
 
@@ -465,5 +467,75 @@ describe('TagInputComponent', () => {
 
             discardPeriodicTasks();
         }));
+
+        it('show custom dropdown menu template', fakeAsync(() => {
+            const fixture: ComponentFixture<TagInputComponentWithCustomAutocomplete> =
+                TestBed.createComponent(TagInputComponentWithCustomAutocomplete);
+
+            const component = getComponent(fixture);
+
+            // press 'i'
+            component.setInputValue('i');
+            component.inputForm.input.nativeElement.dispatchEvent(keyUp);
+
+            fixture.detectChanges();
+            tick();
+
+            const dropdown = document.querySelector('.ng2-dropdown-menu-container');
+            const items = document.querySelectorAll('ng2-menu-item');
+
+            //console.log("Custom display: ", items);
+
+            expect(dropdown).toBeTruthy();
+            expect(component.itemsMatching.length).toEqual(3);
+            expect(items.length).toEqual(3);
+            for(var i = 0; i < items.length; i++) {
+                var item = items.item(i);
+                
+                expect(item.firstChild).not.toBeNull();
+                expect(item.firstChild.childNodes.item(2)).not.toBeNull();
+                expect(item.firstChild.childNodes.item(2).textContent.indexOf("item" + (i+1))).toBeGreaterThan(-1);
+                console.log(item.firstChild.childNodes.item(2));//.item(0).firstChild);
+                //expect(item.childNodes.item(1)).toEqual(2);
+//                expect(item.innerHTML).toEqual(3);
+            }
+
+            discardPeriodicTasks();
+        }));
+
+
+        it('show default custom dropdown menu template', fakeAsync(() => {
+            const fixture: ComponentFixture<TagInputComponentWithoutCustomAutocomplete> =
+                TestBed.createComponent(TagInputComponentWithoutCustomAutocomplete);
+
+            const component = getComponent(fixture);
+
+            // press 'i'
+            component.setInputValue('i');
+            component.inputForm.input.nativeElement.dispatchEvent(keyUp);
+
+            fixture.detectChanges();
+            tick();
+
+            const dropdown = document.querySelector('.ng2-dropdown-menu-container');
+            const items = document.querySelectorAll('ng2-menu-item');
+
+            //console.log("Custom display: ", items);
+
+            expect(dropdown).toBeTruthy();
+            expect(component.itemsMatching.length).toEqual(3);
+            expect(items.length).toEqual(3);
+            for(var i = 0; i < items.length; i++) {
+                var item = items.item(i);
+                
+                expect(item.firstChild).not.toBeNull();
+                expect(item.firstChild.childNodes.item(2)).not.toBeNull();
+                expect(item.firstChild.childNodes.item(2).textContent.indexOf("item" + (i+1))).toBeGreaterThan(-1);
+                console.log(item.firstChild.childNodes.item(2));
+            }
+
+            discardPeriodicTasks();
+        }));
+
     });
 });

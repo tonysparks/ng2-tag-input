@@ -131,6 +131,34 @@ export class TagInputComponentWithOnlyAutocomplete {
     public items = getItems();
 }
 
+
+@Component({
+    selector: 'test-app',
+    template: `<tag-input [(ngModel)]="items"
+                           [onlyFromAutocomplete]="true"
+                           [autocompleteItems]="['item1', 'item2', 'item3']"
+                           [dropdownMenuItemHtml]="dropdownMenuItemHtml"
+                           [autocomplete]="true"></tag-input>`
+})
+export class TagInputComponentWithCustomAutocomplete {
+    public items = getItems();
+
+    public dropdownMenuItemHtml(item:string, inputValue:string) : string {
+        return "Custom item: " + item;
+    }
+}
+
+@Component({
+    selector: 'test-app',
+    template: `<tag-input [(ngModel)]="items"
+                           [onlyFromAutocomplete]="true"
+                           [autocompleteItems]="['item1', 'item2', 'item3']"                           
+                           [autocomplete]="true"></tag-input>`
+})
+export class TagInputComponentWithoutCustomAutocomplete {
+    public items = getItems();
+}
+
 const COMPONENTS = [
     BasicTagInputComponent,
     TagInputComponentWithPlaceholder,
@@ -140,7 +168,9 @@ const COMPONENTS = [
     TagInputComponentWithMaxItems,
     TagInputComponentWithTemplate,
     TagInputComponentWithAutocomplete,
-    TagInputComponentWithOnlyAutocomplete
+    TagInputComponentWithOnlyAutocomplete,
+    TagInputComponentWithCustomAutocomplete,
+    TagInputComponentWithoutCustomAutocomplete
 ];
 
 @NgModule({

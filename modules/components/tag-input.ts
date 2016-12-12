@@ -17,6 +17,11 @@ import {
 } from '@angular/forms';
 
 import {
+    HighlightPipe
+}
+from './pipes/highlight.pipe';
+
+import {
     PLACEHOLDER,
     SECONDARY_PLACEHOLDER,
     KEYDOWN,
@@ -164,6 +169,11 @@ export class TagInputComponent extends TagInputAccessor implements OnInit {
     @Input() private inputClass: string;
 
     /**
+     * Optional custom HTML for each dropdown menu item
+     */
+    @Input() public dropdownMenuItemHtml : (item: string, inputValue: string) => string;
+
+    /**
      * @name onAdd
      * @desc event emitted when adding a new item
      * @type {EventEmitter<string>}
@@ -204,6 +214,7 @@ export class TagInputComponent extends TagInputAccessor implements OnInit {
      * @type {EventEmitter<string>}
      */
     @Output() public onTextChange = new EventEmitter<string>();
+
 
     /**
      * @name template
@@ -452,6 +463,18 @@ export class TagInputComponent extends TagInputAccessor implements OnInit {
         return this.template.nativeElement.children.length > 0;
     }
 
+    /**
+     * @name hasCustomDropdownItemTemplate
+     * @returns {boolean}
+     */
+    private hasCustomDropdownItemTemplate(): boolean {
+        if(this.dropdownMenuItemHtml==null) {
+            return false;
+        }
+
+        return true;
+    }
+
     ngOnInit() {
         // setting up the keypress listeners
         addListener.call(this, KEYDOWN, backSpaceListener);
@@ -490,6 +513,20 @@ export class TagInputComponent extends TagInputAccessor implements OnInit {
                 const value = this.inputForm.value.value;
                 this.onTextChange.emit(value);
             });
+
+        // if there is no custom template for the display of the dropdown
+        // use the default one
+        if(!this.hasCustomDropdownItemTemplate()) {            
+            if(this.autocomplete) {
+                this.dropdownMenuItemHtml = function(item, inputValue) {
+                    return new HighlightPipe().transform(item, inputValue);
+                    /*return `
+                        
+                        ${item | highlight : inputValue}
+                    `;*/
+                }
+            }         
+        }
     }
 
     @HostListener('window:scroll')

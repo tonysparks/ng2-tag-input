@@ -519,11 +519,7 @@ export class TagInputComponent extends TagInputAccessor implements OnInit {
         if(!this.hasCustomDropdownItemTemplate()) {            
             if(this.autocomplete) {
                 this.dropdownMenuItemHtml = function(item, inputValue) {
-                    return new HighlightPipe().transform(item, inputValue);
-                    /*return `
-                        
-                        ${item | highlight : inputValue}
-                    `;*/
+                    return new HighlightPipe().transform(item, inputValue);                    
                 }
             }         
         }

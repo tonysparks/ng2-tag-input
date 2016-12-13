@@ -149,6 +149,14 @@ export class TagInputComponent extends TagInputAccessor implements OnInit {
      */
     @Input() public showDropdownIfEmpty: boolean = false;
 
+    /**
+     * - Focus on the first selection in the dropdown
+     * @name focusDropdownFirstElement
+     * @type {boolean}
+     */
+    @Input() public focusDropdownFirstElement: boolean = false;
+
+
     // outputs
 
     /**

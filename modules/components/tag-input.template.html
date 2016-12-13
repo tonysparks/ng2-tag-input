@@ -65,7 +65,7 @@
 
     <div *ngIf="autocomplete">
         <ng2-dropdown>
-            <ng2-dropdown-menu [focusFirstElement]="false"
+            <ng2-dropdown-menu [focusFirstElement]="focusDropdownFirstElement"
                                (keydown)="escapeDropdown($event)"
                                offset="50 0">
                 <ng2-menu-item *ngFor="let item of itemsMatching" [value]="item">

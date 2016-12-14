@@ -55,6 +55,11 @@ function getMatchingItems(value: string): string[] {
         return [];
     }
 
+    value = value.trim();
+    if(value.length==0) {
+        return [];
+    }
+
     const itemsMatching: string[] = [];
     const items = this.autocompleteItems;
     const lowercaseValue = value.toLowerCase();

@@ -149,13 +149,6 @@ export class TagInputComponent extends TagInputAccessor implements OnInit {
      */
     @Input() public showDropdownIfEmpty: boolean = false;
 
-    /**
-     * - Focus on the first selection in the dropdown
-     * @name focusDropdownFirstElement
-     * @type {boolean}
-     */
-    @Input() public focusDropdownFirstElement: boolean = false;
-
 
     // outputs
 
@@ -428,6 +421,26 @@ export class TagInputComponent extends TagInputAccessor implements OnInit {
         }
     }
 
+    public showDropdown(): void {
+        if(this.autocomplete) {
+            autoCompleteListener.call(this, {});            
+        }
+    }
+
+    /**
+     * Handle the keydown event for the dropdown component
+     */
+    public escapeDropdown($event) {
+        /*
+        // This blows up when tabbing thru the components....
+        if(this.autocomplete) {        
+            if(this.dropdown.menu.state.isVisible) {
+                const position: ClientRect = this.inputForm.getElementPosition();
+                this.dropdown.toggleMenu(position);
+            }
+        }*/
+    }
+
 	/**
      * @name blur
      */
@@ -509,6 +522,15 @@ export class TagInputComponent extends TagInputAccessor implements OnInit {
 
             this.dropdown.onItemClicked.subscribe(onAutocompleteItemClicked.bind(this));
             this.dropdown.onHide.subscribe(() => this.itemsMatching = []);
+            
+            // if there is no custom template for the display of the dropdown
+            // use the default one
+            if(!this.hasCustomDropdownItemTemplate()) {                    
+                this.dropdownMenuItemHtml = function(item, inputValue) {
+                    return new HighlightPipe().transform(item, inputValue);                    
+                }                    
+            }
+
         }
 
         this.inputForm.onKeydown.subscribe(event => {
@@ -521,16 +543,6 @@ export class TagInputComponent extends TagInputAccessor implements OnInit {
                 const value = this.inputForm.value.value;
                 this.onTextChange.emit(value);
             });
-
-        // if there is no custom template for the display of the dropdown
-        // use the default one
-        if(!this.hasCustomDropdownItemTemplate()) {            
-            if(this.autocomplete) {
-                this.dropdownMenuItemHtml = function(item, inputValue) {
-                    return new HighlightPipe().transform(item, inputValue);                    
-                }
-            }         
-        }
     }
 
     @HostListener('window:scroll')
